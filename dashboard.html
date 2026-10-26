@@ -1,0 +1,13 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard</title><link rel="stylesheet" href="/style.css"></head><body>
+<nav><span class="logo">SafeLocker</span><div><span id="who"></span> <button class="btn alt" onclick="out()">Logout</button></div></nav>
+<section><h2 id="title">Loading...</h2><div class="grid" id="cards"></div>
+<p style="text-align:center">More features (shop, orders, lockers) come in the next stages.</p></section>
+<script>
+(async()=>{const m=await fetch('/api/me');if(!m.ok){location.href='/';return}
+const u=await m.json();who.textContent=u.full_name+' ('+u.role+')';
+title.textContent=u.role[0].toUpperCase()+u.role.slice(1)+' Dashboard';
+const d=await (await fetch('/api/dashboard/'+u.role)).json();
+cards.innerHTML=Object.entries(d.cards).map(([k,v])=>`<div class="card"><div class="n">${v}</div>${k}</div>`).join('')})();
+async function out(){await fetch('/api/logout',{method:'POST'});location.href='/'}
+</script></body></html>

@@ -1,0 +1,26 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SafeLocker - Private Parcel Delivery</title><link rel="stylesheet" href="/style.css"></head><body>
+<nav><span class="logo">SafeLocker</span><div><a href="#how">How It Works</a><a href="#privacy">Privacy</a>
+<button class="btn alt" onclick="openM('login')">Login</button> <button class="btn" onclick="openM('reg')">Sign Up</button></div></nav>
+<div class="hero"><h1>Your parcel. Your privacy.</h1>
+<p>Get your orders delivered to a secure smart locker. Sellers and riders never see your home address or phone number.</p>
+<button class="btn" onclick="openM('reg')">Get Started</button></div>
+<section id="how"><h2>How It Works</h2><div class="grid">
+<div class="card step"><h3>1. Order</h3><p>Pick products and choose your preferred locker hub.</p></div>
+<div class="card step"><h3>2. Deliver</h3><p>A rider takes your parcel to the hub and drops it in a locker.</p></div>
+<div class="card step"><h3>3. Collect</h3><p>Scan your private QR code and collect within 48 hours.</p></div></div></section>
+<section id="privacy"><h2>Privacy Policy</h2><div class="card"><p>We share only what each person needs. Sellers see your name and order items. Riders see only the delivery ID, parcel size and hub. Your phone and address stay private. Payments in this demo are simulated; no real money moves.</p></div></section>
+<footer>Demo project. Simulated payments only.</footer>
+<div class="modal" id="m"><div class="box"><h3 id="mt"></h3>
+<input id="fn" placeholder="Full name"><input id="ph" placeholder="Phone (kept private)">
+<input id="em" type="email" placeholder="Email"><input id="pw" type="password" placeholder="Password (8+ characters)">
+<div class="err" id="er"></div><button class="btn" onclick="go()">Continue</button> <button class="btn alt" onclick="closeM()">Cancel</button></div></div>
+<script>
+let mode='login';
+function openM(m){mode=m;mt.textContent=m=='reg'?'Create customer account':'Login';
+fn.style.display=ph.style.display=m=='reg'?'block':'none';er.textContent='';document.getElementById('m').classList.add('on')}
+function closeM(){document.getElementById('m').classList.remove('on')}
+async function go(){const body=mode=='reg'?{full_name:fn.value,email:em.value,password:pw.value,phone:ph.value}:{email:em.value,password:pw.value};
+const r=await fetch('/api/'+(mode=='reg'?'register':'login'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+const d=await r.json();if(!r.ok){er.textContent=d.detail||'Error';return}location.href='/dashboard'}
+</script></body></html>
