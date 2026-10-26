@@ -1,4 +1,4 @@
-fastapi==0.115.0
-uvicorn==0.30.6
-supabase==2.9.0
-PyJWT==2.9.0
+fastapi
+uvicorn
+supabase
+PyJWT
